@@ -2,7 +2,7 @@
     display: grid;
     width: 500px;
     height: 500px;
-    border: 1px solid #541e1e;
+    border: 1px solid #000;
 }
 
 .grid-container div {
