@@ -16,39 +16,46 @@ document.addEventListener("mouseleave", () => {
     isDrawing = false;
 });
 
+
 // Creates a new grid based on the given size
 function createGrid(size) {
     const totalSquares = size * size;
 
     gridContainer.innerHTML = "";
+
     gridContainer.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     gridContainer.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
     for (let i = 0; i < totalSquares; i++) {
         const square = document.createElement("div");
+
         square.dataset.opacity = "0";
 
         square.addEventListener("mouseover", () => {
-            if (!isDrawing) return;
+            if (isDrawing) {
+                const red = Math.floor(Math.random() * 256);
+                const green = Math.floor(Math.random() * 256);
+                const blue = Math.floor(Math.random() * 256);
 
-            const red = Math.floor(Math.random() * 256);
-            const green = Math.floor(Math.random() * 256);
-            const blue = Math.floor(Math.random() * 256);
+                let opacity = Number(square.dataset.opacity);
 
-            let opacity = Number(square.dataset.opacity);
-            opacity += 0.1;
+                opacity += 0.1;
 
-            if (opacity > 1) {
-                opacity = 1;
+                if (opacity > 1) {
+                    opacity = 1;
+                }
+
+                square.dataset.opacity = opacity;
+
+                square.style.backgroundColor =
+                    `rgba(${red}, ${green}, ${blue}, ${opacity})`;
             }
-
-            square.dataset.opacity = String(opacity);
-            square.style.backgroundColor = `rgba(${red}, ${green}, ${blue}, ${opacity})`;
         });
 
         gridContainer.appendChild(square);
     }
 }
+
 
 // Clears the color from every square in the grid
 clearButton.addEventListener("click", () => {
@@ -60,6 +67,7 @@ clearButton.addEventListener("click", () => {
     });
 });
 
+
 // Asks the user for a grid size and creates a new grid
 gridSizeButton.addEventListener("click", () => {
     const size = Number(prompt("Enter grid size: "));
@@ -68,6 +76,7 @@ gridSizeButton.addEventListener("click", () => {
         createGrid(size);
     }
 });
+
 
 // Creates the default 16 × 16 grid when the page loads
 createGrid(16);
