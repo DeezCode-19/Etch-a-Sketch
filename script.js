@@ -12,6 +12,10 @@ document.addEventListener("mouseup", () => {
     isDrawing = false;
 });
 
+document.addEventListener("mouseleave", () => {
+    isDrawing = false;
+});
+
 
 // Creates a new grid based on the given size
 function createGrid(size) {
