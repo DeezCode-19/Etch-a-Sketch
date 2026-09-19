@@ -3,6 +3,7 @@ const gridContainer = document.querySelector(".grid-container");
 const clearButton = document.querySelector(".clear-btn");
 const blackButton = document.querySelector(".black-btn");
 const rgbButton = document.querySelector(".rgb-btn");
+const eraserButton = document.querySelector(".eraser-btn");
 
 let isDrawing = false;
 let colorMode = "rgb";
@@ -27,6 +28,10 @@ rgbButton.addEventListener("click", () => {
     colorMode = "rgb";
 });
 
+eraserButton.addEventListener("click", () => {
+    colorMode = "eraser";
+});
+
 
 // Creates a new grid based on the given size
 function createGrid(size) {
@@ -48,15 +53,21 @@ function createGrid(size) {
     }
 
     let color;
-            if (colorMode === "black") {
-                color = "0, 0, 0";
-            } else {
-                const red = Math.floor(Math.random() * 256);
-                const green = Math.floor(Math.random() * 256);
-                const blue = Math.floor(Math.random() * 256);
+if (colorMode === "eraser") {
+    square.style.backgroundColor = "";
+    square.dataset.opacity = "0";
+    return;
+}
 
-                color = `${red}, ${green}, ${blue}`;
-            }
+if (colorMode === "black") {
+    color = "0, 0, 0";
+} else {
+    const red = Math.floor(Math.random() * 256);
+    const green = Math.floor(Math.random() * 256);
+    const blue = Math.floor(Math.random() * 256);
+
+    color = `${red}, ${green}, ${blue}`;
+}
 
             let opacity = Number(square.dataset.opacity);
 
