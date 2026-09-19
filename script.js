@@ -1,10 +1,13 @@
 const gridSizeButton = document.querySelector(".grid-size-btn");
 const gridContainer = document.querySelector(".grid-container");
 const clearButton = document.querySelector(".clear-btn");
+const blackButton = document.querySelector(".black-btn");
+const rgbButton = document.querySelector(".rgb-btn");
 
 let isDrawing = false;
+let colorMode = "rgb";
 
-document.addEventListener("mousedown", () => {
+gridContainer.addEventListener("mousedown", () => {
     isDrawing = true;
 });
 
@@ -14,6 +17,14 @@ document.addEventListener("mouseup", () => {
 
 document.addEventListener("mouseleave", () => {
     isDrawing = false;
+});
+
+blackButton.addEventListener("click", () => {
+    colorMode = "black";
+});
+
+rgbButton.addEventListener("click", () => {
+    colorMode = "rgb";
 });
 
 
@@ -32,31 +43,37 @@ function createGrid(size) {
         square.dataset.opacity = "0";
 
         square.addEventListener("mouseover", () => {
-            if (isDrawing) {
+    if (!isDrawing) {
+        return;
+    }
+
+    let color;
+            if (colorMode === "black") {
+                color = "0, 0, 0";
+            } else {
                 const red = Math.floor(Math.random() * 256);
                 const green = Math.floor(Math.random() * 256);
                 const blue = Math.floor(Math.random() * 256);
 
-                let opacity = Number(square.dataset.opacity);
-
-                opacity += 0.1;
-
-                if (opacity > 1) {
-                    opacity = 1;
-                }
-
-                square.dataset.opacity = opacity;
-
-                square.style.backgroundColor =
-                    `rgba(${red}, ${green}, ${blue}, ${opacity})`;
+                color = `${red}, ${green}, ${blue}`;
             }
+
+            let opacity = Number(square.dataset.opacity);
+
+            opacity += 0.1;
+
+            if (opacity > 1) {
+                opacity = 1;
+            }
+
+            square.dataset.opacity = opacity;
+
+            square.style.backgroundColor = `rgba(${color}, ${opacity})`;
         });
 
         gridContainer.appendChild(square);
     }
 }
-
-
 // Clears the color from every square in the grid
 clearButton.addEventListener("click", () => {
     const squares = gridContainer.querySelectorAll("div");
