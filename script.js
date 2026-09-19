@@ -1,4 +1,5 @@
-const gridSizeButton = document.querySelector(".grid-size-btn");
+const gridSizeSlider = document.querySelector("#grid-size");
+const gridSizeValue = document.querySelector("#grid-size-value");
 const gridContainer = document.querySelector(".grid-container");
 const clearButton = document.querySelector(".clear-btn");
 const blackButton = document.querySelector(".black-btn");
@@ -97,12 +98,12 @@ clearButton.addEventListener("click", () => {
 
 
 // Asks the user for a grid size and creates a new grid
-gridSizeButton.addEventListener("click", () => {
-    const size = Number(prompt("Enter grid size: "));
+gridSizeSlider.addEventListener("input", () => {
+    const size = Number(gridSizeSlider.value);
 
-    if (Number.isInteger(size) && size > 0) {
-        createGrid(size);
-    }
+    gridSizeValue.textContent = `${size} × ${size}`;
+
+    createGrid(size);
 });
 
 

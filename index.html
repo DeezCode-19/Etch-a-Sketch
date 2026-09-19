@@ -8,13 +8,20 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="controls">
-        <button class="grid-size-btn">Set Grid Size</button>
-         <button class="clear-btn">Clear</button>
-            <button class="black-btn">Black</button>
-                <button class="rgb-btn">RGB</button>
-                    <button class="eraser-btn">Eraser</button>
+<div class="controls">
+    <div class="grid-size-control">
+        <label for="grid-size">
+            Grid Size: <span id="grid-size-value">16 × 16</span>
+        </label>
+
+        <input type="range" id="grid-size" min="8" max="64" value="16">
     </div>
+
+    <button class="clear-btn">Clear</button>
+    <button class="black-btn">Black</button>
+    <button class="rgb-btn">RGB</button>
+    <button class="eraser-btn">Eraser</button>
+</div>
     
     <div class="grid-container"></div>
 </body>
