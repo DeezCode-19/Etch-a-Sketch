@@ -46,58 +46,47 @@ function createGrid(size) {
     for (let i = 0; i < totalSquares; i++) {
         const square = document.createElement("div");
 
-        square.dataset.opacity = "0";
-
-        square.addEventListener("mouseover", () => {
-    if (!isDrawing) {
-        return;
-    }
-
-    let color;
-if (colorMode === "eraser") {
-    square.style.backgroundColor = "";
-    square.dataset.opacity = "0";
-    return;
-}
-
-if (colorMode === "black") {
-    color = "0, 0, 0";
-} else {
-    const red = Math.floor(Math.random() * 256);
-    const green = Math.floor(Math.random() * 256);
-    const blue = Math.floor(Math.random() * 256);
-
-    color = `${red}, ${green}, ${blue}`;
-}
-
-            let opacity = Number(square.dataset.opacity);
-
-            opacity += 0.1;
-
-            if (opacity > 1) {
-                opacity = 1;
+        square.addEventListener("mouseenter", (event) => {
+            if (!isDrawing || event.buttons !== 1) {
+                return;
             }
 
-            square.dataset.opacity = opacity;
+            let color;
 
-            square.style.backgroundColor = `rgba(${color}, ${opacity})`;
+            if (colorMode === "eraser") {
+                square.style.backgroundColor = "";
+                return;
+            }
+
+            if (colorMode === "black") {
+                color = "0, 0, 0";
+            } else {
+                const red = Math.floor(Math.random() * 256);
+                const green = Math.floor(Math.random() * 256);
+                const blue = Math.floor(Math.random() * 256);
+
+                color = `${red}, ${green}, ${blue}`;
+            }
+
+            square.style.backgroundColor = `rgb(${color})`;
         });
 
         gridContainer.appendChild(square);
     }
 }
+
+
 // Clears the color from every square in the grid
 clearButton.addEventListener("click", () => {
     const squares = gridContainer.querySelectorAll("div");
 
     squares.forEach(square => {
         square.style.backgroundColor = "";
-        square.dataset.opacity = "0";
     });
 });
 
 
-// Asks the user for a grid size and creates a new grid
+// Changes the grid size using the slider
 gridSizeSlider.addEventListener("input", () => {
     const size = Number(gridSizeSlider.value);
 
